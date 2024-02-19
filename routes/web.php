@@ -17,13 +17,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-<<<<<<< HEAD
-=======
 Route::get('/index', function () {
     return view('home.user');
 });
 
->>>>>>> 8541258 (add template home page)
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
