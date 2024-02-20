@@ -32,3 +32,7 @@ Route::middleware([
 });
 
 Route::get('/redirect',[\App\Http\Controllers\HomeController::class,'redirect']);
+
+
+Route::get('/view_category',[\App\Http\Controllers\AdminController::class,'view_category']);
+Route::post('/add_category',[\App\Http\Controllers\AdminController::class,'add_category']);
