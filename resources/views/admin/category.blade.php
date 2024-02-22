@@ -44,6 +44,47 @@
                     </form>
                 </div>
             </div>
+
+{{--            show category--}}
+                <div class="card shadow border-0 mt-4 p-3">
+                    <div class="card-header bg-primary bg-gradient ml-0 py-3">
+                        <div class="row">
+                            <div class="col-12 text-center">
+                                <h2 class="text-white py-2">Category List</h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body p-4 ">
+
+                    </div>
+                    <table class="table">
+                        <thead class="table-primary">
+                        <tr>
+                            <th scope="col">Category ID</th>
+                            <th scope="col">Category Name</th>
+                            <th scope="col">Create Date Time</th>
+                            <th scope="col">Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @foreach($data as $data)
+
+                            <tr>
+                                <th scope="row">{{$data->id}}</th>
+                                <td>{{$data->category_name}}</td>
+                                <td>{{$data->created_at}}</td>
+                                <td>
+                                    <a href="{{url('edit_category',$data->id)}}"
+                                       class="btn btn-success"><i class="bi bi-pencil-square" style="height:30px; cursor:pointer"></i>  Edit</a>
+                                    &nbsp;
+                                    <a href="{{url('delete_category',$data->id)}}"
+                                       class="btn btn-primary"><i class="bi bi-trash" style="height:30px; cursor:pointer"></i> Delete</a>
+                                </td>
+                            </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
+{{--            end show--}}
         </div>
     </div>
     <!-- container-scroller -->
