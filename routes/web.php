@@ -13,12 +13,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-Route::get('/index', function () {
-    return view('home.user');
-});
+Route::get('/', [\App\Http\Controllers\HomeController::class,'index']);
+Route::get('/redirect',[\App\Http\Controllers\HomeController::class,'redirect']);
 
 Route::middleware([
     'auth:sanctum',
@@ -30,16 +26,13 @@ Route::middleware([
     })->name('dashboard');
 });
 
-Route::get('/redirect',[\App\Http\Controllers\HomeController::class,'redirect']);
-
-
 Route::get('/view_category',[\App\Http\Controllers\AdminController::class,'view_category']);
 Route::post('/add_category',[\App\Http\Controllers\AdminController::class,'add_category']);
 Route::get('/delete_category/{id}',[\App\Http\Controllers\AdminController::class,'delete_category']);
 
-Route::get('/view_product',[\App\Http\Controllers\AdminController::class,'view_product']);
-Route::post('/add_product',[\App\Http\Controllers\AdminController::class,'add_product']);
-Route::get('/show_product',[\App\Http\Controllers\AdminController::class,'show_product']);
-Route::get('/delete_product/{id}',[\App\Http\Controllers\AdminController::class,'delete_product']);
-Route::get('/edit_product/{id}',[\App\Http\Controllers\AdminController::class,'edit_product']);
-Route::post('/updateProductConfirm/{id}',[\App\Http\Controllers\AdminController::class,'updateProductConfirm']);
+Route::get('/view_product',[\App\Http\Controllers\ProductController::class,'view_product']);
+Route::post('/add_product',[\App\Http\Controllers\ProductController::class,'add_product']);
+Route::get('/show_product',[\App\Http\Controllers\ProductController::class,'show_product']);
+Route::get('/delete_product/{id}',[\App\Http\Controllers\ProductController::class,'delete_product']);
+Route::get('/edit_product/{id}',[\App\Http\Controllers\ProductController::class,'edit_product']);
+Route::post('/updateProductConfirm/{id}',[\App\Http\Controllers\ProductController::class,'updateProductConfirm']);

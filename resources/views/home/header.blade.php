@@ -16,9 +16,6 @@
                     <!-- ***** Menu Start ***** -->
                     <ul class="nav">
                         <li class="scroll-to-section"><a href="#top" class="active">Home</a></li>
-                        <li class="scroll-to-section"><a href="#men">Men's</a></li>
-                        <li class="scroll-to-section"><a href="#women">Women's</a></li>
-                        <li class="scroll-to-section"><a href="#kids">Kid's</a></li>
                         <li class="submenu">
                             <a href="javascript:;">Pages</a>
                             <ul>
@@ -37,8 +34,20 @@
                                 <li><a rel="nofollow" href="https://templatemo.com/page/4" target="_blank">Template Page 4</a></li>
                             </ul>
                         </li>
-                        <li><a class="btn btn-primary d-flex justify-content-center align-items-center" href="{{ route('login') }}">LOGIN</a></li>
-                        <li><a class="btn btn-success d-flex justify-content-center align-items-center" href="{{ route('register') }}">REGISTER</a></li>
+
+                        @guest
+                            <li><a class="btn btn-primary d-flex justify-content-center align-items-center" href="{{ route('login') }}">LOGIN</a></li>
+                            <li><a class="btn btn-success d-flex justify-content-center align-items-center" href="{{ route('register') }}">REGISTER</a></li>
+                        @else
+                            <div class="btn-group" style="margin-right: 5px;">
+                                <a class="btn btn-success" href="{{ route('profile.show') }}">{{ Auth::user()->name }}</a>
+                                <form method="POST" action="{{ route('logout') }}">
+                                    @csrf
+                                    <button class="btn btn-success" type="submit" style="margin-left: 5px">Logout</button>
+                                </form>
+                            </div>
+                        @endguest
+
 
                     </ul>
                     <a class='menu-trigger'>

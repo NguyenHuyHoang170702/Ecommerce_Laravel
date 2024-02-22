@@ -63,27 +63,30 @@
                     </tr>
                     </thead>
                     <tbody>
-                    @foreach($data as $data)
+                    @foreach($data as $item)
 
                         <tr>
-                            <th scope="row">{{$data->id}}</th>
-                            <td>{{$data->title}}</td>
-                            <td>{{$data->category}}</td>
-                            <td>{{$data->quantity}}</td>
-                            <td>{{$data->price}}</td>
-                            <td>{{$data->discount_price}}</td>
+                            <th scope="row">{{$item->id}}</th>
+                            <td>{{$item->title}}</td>
+                            <td>{{$item->category}}</td>
+                            <td>{{$item->quantity}}</td>
+                            <td>{{$item->price}}</td>
+                            <td>{{$item->discount_price}}</td>
                             <td>
-                                <img src="product/{{$data->image}}" style="width: 100px; height: 100px">
+                                <img src="product/{{$item->image}}" style="width: 100px; height: 100px">
                             </td>
                             <td>
-                                <a href="{{url('edit_product',$data->id)}}"
-                                   class="btn btn-success"><i class="bi bi-pencil-square" style="height:30px; cursor:pointer"></i>  Edit</a>
+                                <a href="{{url('edit_product',$item->id)}}" class="btn btn-success">
+                                    <i class="bi bi-pencil-square" style="height:30px; cursor:pointer"></i>  Edit
+                                </a>
                                 &nbsp;
-                                <a href="{{url('delete_product',$data->id)}}"
-                                   class="btn btn-danger"><i class="bi bi-trash" style="height:30px; cursor:pointer"></i> Delete</a>
+                                <a href="{{url('delete_product',$item->id)}}" class="btn btn-danger">
+                                    <i class="bi bi-trash" style="height:30px; cursor:pointer"></i> Delete
+                                </a>
                             </td>
                         </tr>
                     @endforeach
+                    {!!$data->withQueryString()->links('pagination::bootstrap-5')!!}
                     </tbody>
                 </table>
                 {{--            end show--}}

@@ -46,16 +46,8 @@
 <!-- ***** Main Banner Area End ***** -->
 
 <!-- ***** Men Area Starts ***** -->
-@include('home.man_area')
+@include('home.product_area')
 <!-- ***** Men Area Ends ***** -->
-
-<!-- ***** Women Area Starts ***** -->
-@include('home.woman_area')
-<!-- ***** Women Area Ends ***** -->
-
-<!-- ***** Kids Area Starts ***** -->
-@include('home.kid_area')
-<!-- ***** Kids Area Ends ***** -->
 
 <!-- ***** Explore Area Starts ***** -->
 @include('home.explore_area')

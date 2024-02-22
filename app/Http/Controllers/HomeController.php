@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
@@ -15,7 +16,14 @@ class HomeController extends Controller
         if($userType == '1'){
             return view('admin.home');
         }else{
-            return view('dashboard');
+            $data = Product::all();
+            return view('home.user',compact('data'));
         }
     }
+
+    public function index() {
+        $data = Product::all();
+        return view('home.user', compact('data'));
+    }
+
 }
