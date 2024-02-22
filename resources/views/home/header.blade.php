@@ -34,8 +34,14 @@
                                 <li><a rel="nofollow" href="https://templatemo.com/page/4" target="_blank">Template Page 4</a></li>
                             </ul>
                         </li>
-                        <li><a href="{{url('show_shopping_cart')}}"><i class="fa fa-shopping-cart"></i>(0)</a> </li>
-                        @guest
+                        <li>
+                            <a href="{{ url('show_shopping_cart') }}">
+                                <i class="fa fa-shopping-cart"></i>
+                                ({{ session()->has('cart') ? count(session('cart')) : 0 }})
+                            </a>
+                        </li>
+
+                    @guest
                             <li><a class="btn btn-primary d-flex justify-content-center align-items-center" href="{{ route('login') }}">LOGIN</a></li>
                             <li><a class="btn btn-success d-flex justify-content-center align-items-center" href="{{ route('register') }}">REGISTER</a></li>
                         @else
