@@ -21,7 +21,7 @@
                             <div class="thumb">
                                 <div class="hover-content">
                                     <ul>
-                                        <li><a href="single-product.blade.php"><i class="fa fa-eye"></i></a></li>
+                                        <li><a href="{{url('detail',$d->id)}}"><i class="fa fa-eye"></i></a></li>
                                         <li><a href="single-product.blade.php"><i class="fa fa-shopping-cart"></i></a></li>
                                     </ul>
                                 </div>

@@ -38,4 +38,6 @@ Route::group(['middleware' => ['admin']], function () {
     Route::post('/updateProductConfirm/{id}',[\App\Http\Controllers\ProductController::class,'updateProductConfirm']);
 });
 
+Route::get('/detail/{id}',[\App\Http\Controllers\HomeController::class,'detail']);
+
 

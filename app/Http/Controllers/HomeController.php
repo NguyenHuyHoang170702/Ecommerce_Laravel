@@ -26,4 +26,9 @@ class HomeController extends Controller
         return view('home.user', compact('data'));
     }
 
+    public function detail($id) {
+        $data = Product::find($id);
+        return view('home.detail', compact('data'));
+    }
+
 }
