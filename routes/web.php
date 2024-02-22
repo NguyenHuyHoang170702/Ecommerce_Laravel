@@ -16,7 +16,6 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-
 Route::get('/index', function () {
     return view('home.user');
 });
@@ -41,3 +40,6 @@ Route::get('/delete_category/{id}',[\App\Http\Controllers\AdminController::class
 Route::get('/view_product',[\App\Http\Controllers\AdminController::class,'view_product']);
 Route::post('/add_product',[\App\Http\Controllers\AdminController::class,'add_product']);
 Route::get('/show_product',[\App\Http\Controllers\AdminController::class,'show_product']);
+Route::get('/delete_product/{id}',[\App\Http\Controllers\AdminController::class,'delete_product']);
+Route::get('/edit_product/{id}',[\App\Http\Controllers\AdminController::class,'edit_product']);
+Route::post('/updateProductConfirm/{id}',[\App\Http\Controllers\AdminController::class,'updateProductConfirm']);

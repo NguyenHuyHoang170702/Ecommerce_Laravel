@@ -76,11 +76,11 @@
                                 <img src="product/{{$data->image}}" style="width: 100px; height: 100px">
                             </td>
                             <td>
-                                <a href="{{url('edit_category',$data->id)}}"
+                                <a href="{{url('edit_product',$data->id)}}"
                                    class="btn btn-success"><i class="bi bi-pencil-square" style="height:30px; cursor:pointer"></i>  Edit</a>
                                 &nbsp;
-                                <a href="{{url('delete_category',$data->id)}}"
-                                   class="btn btn-primary"><i class="bi bi-trash" style="height:30px; cursor:pointer"></i> Delete</a>
+                                <a href="{{url('delete_product',$data->id)}}"
+                                   class="btn btn-danger"><i class="bi bi-trash" style="height:30px; cursor:pointer"></i> Delete</a>
                             </td>
                         </tr>
                     @endforeach

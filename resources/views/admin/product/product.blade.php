@@ -72,7 +72,7 @@
                         </div>
                     </div>
                     <div class="row mt-3">
-                        <div class="col-10">
+                        <div class="col">
                             <form action="{{url('/add_product')}}" method="post" enctype="multipart/form-data">
                                 @csrf
                                 <div class="p-3 border border-primary">
@@ -118,21 +118,6 @@
                                 </div>
                             </form>
                         </div>
-                        {{--                        <div class="col-2">--}}
-                        {{--                            @if (Model.Product.ProductImages != null)--}}
-                        {{--                                {--}}
-                        {{--                                foreach (var image in Model.Product.ProductImages)--}}
-                        {{--                                {--}}
-                        {{--                                <div class="border p-1 m-2  text-center">--}}
-                        {{--                                    <img style="width: 100%; height: 210px;border-radius: 10px; border: 1px solid #bbb9b9;"--}}
-                        {{--                                         alt="Product Image" src="@image.ImgUrl">--}}
-                        {{--                                    <a action="DeleteImage" class="btn btn-danger" route-ImageId="@image.Id">--}}
-                        {{--                                        <i class="bi bi-trash-fill"></i> Delete--}}
-                        {{--                                    </a>--}}
-                        {{--                                </div>--}}
-                        {{--                                }--}}
-                        {{--                                }--}}
-                        {{--                        </div>--}}
 
                     </div>
 
@@ -141,3 +126,9 @@
         </div>
     </div>
 </div>
+<!-- plugins:js -->
+@include('admin.script')
+<!-- End custom js for this page -->
+
+</body>
+</html>
