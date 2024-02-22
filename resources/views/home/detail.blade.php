@@ -42,8 +42,8 @@
 <!-- ***** Header Area End ***** -->
 
 <div style="padding-top: 10px; margin-top: 50px">
-    <form method="post" style="padding: 50px">
-        <input hidden for="ProductId" />
+    <form action="{{url('add_shoppingCart',$data->id)}}" method="post" style="padding: 50px">
+        @csrf
         <div class="card shadow border-8 mt-4">
             <div class="card-header bg-secondary bg-gradient text-light py-4">
                 <div class="row">
@@ -91,7 +91,7 @@
 									<span class="input-group-text bg-primary text-white border-0" id="inputGroup-sizing-default">
 										Count
 									</span>
-                                        <input for="Count" type="number" value="1" class="form-control text-end" aria-label="Sizing example input" />
+                                        <input for="Count"  name="count" type="number" value="1" class="form-control text-end" aria-label="Sizing example input" />
                                     </div>
                                 </div>
                             </div>

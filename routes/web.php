@@ -39,5 +39,7 @@ Route::group(['middleware' => ['admin']], function () {
 });
 
 Route::get('/detail/{id}',[\App\Http\Controllers\HomeController::class,'detail']);
+Route::post('/add_shoppingCart/{id}',[\App\Http\Controllers\ShoppingCartController::class,'add_shoppingCart']);
+Route::get('/show_shopping_cart',[\App\Http\Controllers\ShoppingCartController::class,'show_shopping_cart']);
 
 
