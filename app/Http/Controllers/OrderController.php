@@ -110,6 +110,17 @@ class OrderController extends Controller
         return view('404');
     }
 
+    public function getOrderForCustomer()
+    {
+        if (!Auth::check()) {
+            return redirect()->route('login');
+        }
+        $data = Order::orderBy('created_at', 'desc')
+            ->where('user_id', Auth::user()->id)
+            ->get();
+        return view('home.order',compact('data'));
+    }
+
     public function getAllOrder()
     {
         if (!Auth::check()) {

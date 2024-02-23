@@ -26,7 +26,7 @@
                             </ul>
                         </li>
                         <li class="">
-                            <a href="">Manager Order</a>
+                            <a href="{{url('getOrderForCustomer')}}">Manager Order</a>
                         </li>
                         <li>
                             <a href="{{ url('show_shopping_cart') }}">
