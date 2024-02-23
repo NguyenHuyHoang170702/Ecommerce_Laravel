@@ -9,7 +9,7 @@
             <div class="col-12">
                 <nav class="main-nav">
                     <!-- ***** Logo Start ***** -->
-                    <a href="index.html" class="logo">
+                    <a href="{{url('/')}}" class="logo">
                         <img src="{{URL::asset('images/logo.png')}}" />
                     </a>
                     <!-- ***** Logo End ***** -->

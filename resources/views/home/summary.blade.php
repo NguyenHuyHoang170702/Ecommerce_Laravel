@@ -44,7 +44,7 @@ use Carbon\Carbon;
 <!-- ***** Header Area End ***** -->
 
 <div style="padding-top: 10px; margin-top: 50px">
-    <form method="post" style="padding: 10px">
+    <form style="padding: 10px">
         <br />
         <div class="container">
             <div class="card shadow border-0">
@@ -139,8 +139,8 @@ use Carbon\Carbon;
                             <a class="btn btn-danger btn-sm" href="{{url('show_shopping_cart')}}">Back to Cart</a>
                         </div>
                         <div class="col-12 col-md-4">
-                            <button type="submit" class="btn btn-primary form-control">Cash On Delivery</button>
-                            <button type="submit" class="btn btn-success form-control mt-1">Pay Using Card</button>
+                            <a href="{{url('cash_order')}}" class="btn btn-primary form-control">Cash On Delivery</a>
+                            <a href="{{url('card_order')}}" class="btn btn-success form-control mt-1">Pay Using Card</a>
                         </div>
                     </div>
                 </div>

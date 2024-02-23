@@ -47,3 +47,6 @@ Route::get('/minus/{id}',[\App\Http\Controllers\ShoppingCartController::class,'m
 Route::get('/delete/{id}',[\App\Http\Controllers\ShoppingCartController::class,'delete']);
 Route::get('/summary',[\App\Http\Controllers\ShoppingCartController::class,'summary']);
 
+
+
+Route::get('/cash_order',[\App\Http\Controllers\OrderController::class,'cash_order']);

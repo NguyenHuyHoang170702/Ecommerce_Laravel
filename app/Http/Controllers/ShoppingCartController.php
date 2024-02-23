@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use function Sodium\compare;
 
 class ShoppingCartController extends Controller
 {
@@ -52,7 +53,8 @@ class ShoppingCartController extends Controller
         $cart = session()->get('cart');
 
         if (!$cart || empty($cart)) {
-            return view('home.user');
+            $data = Product::all();
+            return view('home.user',compact('data'));
         }
 
         $totalQuantity = 0;
@@ -102,7 +104,8 @@ class ShoppingCartController extends Controller
             session()->put('cart', $cart);
         }
         if($cart == null){
-            return redirect('/');
+            $data = Product::all();
+            return redirect('/',compact('data'));
         }
 
         return redirect()->back()->with('success', 'Product deleted to shopping cart successfully');
