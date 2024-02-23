@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [\App\Http\Controllers\HomeController::class,'index']);
 Route::get('/redirect',[\App\Http\Controllers\HomeController::class,'redirect']);
+Route::get('/detail/{id}',[\App\Http\Controllers\HomeController::class,'detail']);
 
 Route::middleware([
     'auth:sanctum',
@@ -38,8 +39,10 @@ Route::group(['middleware' => ['admin']], function () {
     Route::post('/updateProductConfirm/{id}',[\App\Http\Controllers\ProductController::class,'updateProductConfirm']);
 });
 
-Route::get('/detail/{id}',[\App\Http\Controllers\HomeController::class,'detail']);
+
 Route::post('/add_shoppingCart/{id}',[\App\Http\Controllers\ShoppingCartController::class,'add_shoppingCart']);
 Route::get('/show_shopping_cart',[\App\Http\Controllers\ShoppingCartController::class,'show_shopping_cart']);
-
+Route::get('/plus/{id}',[\App\Http\Controllers\ShoppingCartController::class,'plus']);
+Route::get('/minus/{id}',[\App\Http\Controllers\ShoppingCartController::class,'minus']);
+Route::get('/delete/{id}',[\App\Http\Controllers\ShoppingCartController::class,'delete']);
 

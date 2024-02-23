@@ -37,6 +37,15 @@
                 </div>
             </div>
             <div class="card-body my-4">
+                @if(session('success'))
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        {{ session('success') }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+
+                    </div>
+                @endif
                 <div class="row mb-3 pb-3">
                     <div class="col-md-2 offset-md-1">
                         <a href="{{ url('/') }}" class="btn btn-outline-primary text-uppercase mb-5 btn-sm"><small>Continue Shopping</small></a>
@@ -48,7 +57,7 @@
                                     <img src="/product/{{$item['image']}}" class="card-img-top rounded w-100" alt="Product Image">
                                 </div>
 
-                                <div class="col-12 col-lg-9 text-center row my-3">
+                                <div class="col-12 col-lg-10 text-center row my-3">
                                     <div class="col-3 text-md-right pt-2 pt-md-4">
                                         <h6 class="fw-semibold">{{ $item['price'] }}<span class="text-muted">&nbsp;x&nbsp;</span>{{ $item['quantity'] }}</h6>
                                     </div>
@@ -58,6 +67,7 @@
                                             <a href="{{ url('minus/'.$item['id']) }}" class="btn btn-outline-primary bg-gradient py-2"><i class="fa fa-minus"></i></a>
                                         </div>
                                     </div>
+
                                     <div class="col-3 col-sm-4 col-lg-2 offset-lg-1 text-right pt-2">
                                         <a href="{{ url('delete/'.$item['id']) }}" class="btn btn-danger bg-gradient py-2"><i class="fa fa-trash"></i></a>
                                     </div>

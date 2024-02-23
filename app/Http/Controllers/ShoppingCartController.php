@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 
 class ShoppingCartController extends Controller
 {
-    public function add_shoppingCart($id)
+    public function add_shoppingCart(Request $request,$id)
     {
         $product = Product::find($id);
 
@@ -23,13 +23,24 @@ class ShoppingCartController extends Controller
         if (isset($cart[$id])) {
             $cart[$id]['quantity']++;
         } else {
-            $cart[$id] = [
-                'id' => $id,
-                'title' => $product->title,
-                'quantity' => 1,
-                'price' => $product->discount_price,
-                'image' => $product->image,
-            ];
+            if($request->count != null){
+                $cart[$id] = [
+                    'id' => $id,
+                    'title' => $product->title,
+                    'quantity' => $request->count,
+                    'price' => $product->discount_price,
+                    'image' => $product->image,
+                ];
+            }else{
+                $cart[$id] = [
+                    'id' => $id,
+                    'title' => $product->title,
+                    'quantity' => 1,
+                    'price' => $product->discount_price,
+                    'image' => $product->image,
+                ];
+            }
+
         }
         session()->put('cart', $cart);
         return redirect()->back()->with('success', 'Product added successfully');
@@ -52,6 +63,48 @@ class ShoppingCartController extends Controller
         }
 
         return view('home.shopping_cart', compact('cart', 'totalQuantity', 'totalPrice'));
+    }
+
+    public function plus($id)
+    {
+        $cart = session()->get('cart');
+
+        if (isset($cart[$id])) {
+            $cart[$id]['quantity']++;
+            session()->put('cart', $cart);
+        }
+
+        return redirect()->back()->with('success', 'Added a Product to shopping cart successfully');
+    }
+
+    public function minus($id)
+    {
+        $cart = session()->get('cart');
+
+        if (isset($cart[$id])) {
+            $cart[$id]['quantity']--;
+            if ($cart[$id]['quantity'] == 0) {
+                unset($cart[$id]);
+            }
+            session()->put('cart', $cart);
+        }
+
+        return redirect()->back()->with('success', 'Minus a Product to shopping successfully');
+    }
+
+    public function delete($id)
+    {
+        $cart = session()->get('cart');
+
+        if (isset($cart[$id])) {
+            unset($cart[$id]);
+            session()->put('cart', $cart);
+        }
+        if($cart == null){
+            return redirect('/');
+        }
+
+        return redirect()->back()->with('success', 'Product deleted to shopping cart successfully');
     }
 
 }
