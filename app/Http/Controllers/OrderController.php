@@ -36,6 +36,7 @@ class OrderController extends Controller
             $newOrder->save();
         }
         \Illuminate\Support\Facades\Session::forget('cart');
-        return view('home.success');
+
+        return view('home.success', compact('newOrder'));
     }
 }
