@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ShoppingCartController extends Controller
 {
@@ -106,5 +107,23 @@ class ShoppingCartController extends Controller
 
         return redirect()->back()->with('success', 'Product deleted to shopping cart successfully');
     }
+
+    public function summary()
+    {
+        if (!Auth::check()) {
+            return redirect()->route('login');
+        }
+        $cart = session()->get('cart');
+        $user = Auth::user();
+        $totalQuantity = 0;
+        $totalPrice = 0;
+
+        foreach ($cart as $item) {
+            $totalQuantity += $item['quantity'];
+            $totalPrice += $item['quantity'] * $item['price'];
+        }
+        return view('home.summary', compact('cart', 'user','totalPrice','totalQuantity'));
+    }
+
 
 }

@@ -45,4 +45,5 @@ Route::get('/show_shopping_cart',[\App\Http\Controllers\ShoppingCartController::
 Route::get('/plus/{id}',[\App\Http\Controllers\ShoppingCartController::class,'plus']);
 Route::get('/minus/{id}',[\App\Http\Controllers\ShoppingCartController::class,'minus']);
 Route::get('/delete/{id}',[\App\Http\Controllers\ShoppingCartController::class,'delete']);
+Route::get('/summary',[\App\Http\Controllers\ShoppingCartController::class,'summary']);
 

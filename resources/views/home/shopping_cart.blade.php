@@ -90,7 +90,7 @@
                     </div>
                     <div class="row">
                         <div class="col-md-2 offset-md-5">
-                            <a href="{{ url('shopping_cart/summary') }}" class="btn btn-primary border-0 bg-gradient w-100 py-2">Summary</a>
+                            <a href="{{url('summary')}}" class="btn btn-primary border-0 bg-gradient w-100 py-2">Summary</a>
                         </div>
                     </div>
                 </div>
