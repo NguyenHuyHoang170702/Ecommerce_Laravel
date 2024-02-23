@@ -50,3 +50,6 @@ Route::get('/summary',[\App\Http\Controllers\ShoppingCartController::class,'summ
 
 
 Route::get('/cash_order',[\App\Http\Controllers\OrderController::class,'cash_order']);
+Route::post('/stripe',[\App\Http\Controllers\OrderController::class,'stripe'])->name('stripe');
+Route::get('/success', [\App\Http\Controllers\OrderController::class, 'stripeSuccess'])->name('stripeSuccess');
+Route::get('/404', [\App\Http\Controllers\OrderController::class, 'stripeCancel'])->name('stripeCancel');

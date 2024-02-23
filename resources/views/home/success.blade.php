@@ -45,12 +45,11 @@
     <div class="container row pt-4" style="padding: 10px">
         <div class="col-12 text-center">
             <h1 class="text-primary text-center">Order Placed Successfully!</h1>
-            Your Order Number is : {{$newOrder->id}}<br /><br />
             <img src="https://haenglish.edu.vn/wp-content/uploads/2023/08/download.jpg" width="65%" />
         </div>
         <div class="col-12 text-center" style="color: maroon">
             <br />
-            {{$newOrder->name}} - Your order has been placed successfully! <br />
+           Your order has been placed successfully! <br />
         </div>
     </div>
 </div>

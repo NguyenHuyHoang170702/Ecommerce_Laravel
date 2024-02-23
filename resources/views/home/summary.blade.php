@@ -44,7 +44,7 @@ use Carbon\Carbon;
 <!-- ***** Header Area End ***** -->
 
 <div style="padding-top: 10px; margin-top: 50px">
-    <form style="padding: 10px">
+    <div style="padding: 10px">
         <br />
         <div class="container">
             <div class="card shadow border-0">
@@ -140,13 +140,17 @@ use Carbon\Carbon;
                         </div>
                         <div class="col-12 col-md-4">
                             <a href="{{url('cash_order')}}" class="btn btn-primary form-control">Cash On Delivery</a>
-                            <a href="{{url('card_order')}}" class="btn btn-success form-control mt-1">Pay Using Card</a>
+                            <form action="{{ route('stripe') }}" method="POST">
+                                @csrf
+                                <button class="btn btn-success form-control mt-1">Pay Using Card</button>
+                            </form>
+
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </form>
+    </div>
 </div>
 
 
