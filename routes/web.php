@@ -37,6 +37,11 @@ Route::group(['middleware' => ['admin']], function () {
     Route::get('/delete_product/{id}',[\App\Http\Controllers\ProductController::class,'delete_product']);
     Route::get('/edit_product/{id}',[\App\Http\Controllers\ProductController::class,'edit_product']);
     Route::post('/updateProductConfirm/{id}',[\App\Http\Controllers\ProductController::class,'updateProductConfirm']);
+
+    Route::get('/getAllOrder',[\App\Http\Controllers\OrderController::class,'getAllOrder']);
+    Route::get('/Paid/{id}',[\App\Http\Controllers\OrderController::class,'Paid']);
+    Route::get('/UnPaid/{id}',[\App\Http\Controllers\OrderController::class,'UnPaid']);
+    Route::get('/Shipping/{id}',[\App\Http\Controllers\OrderController::class,'Shipping']);
 });
 
 

@@ -110,4 +110,52 @@ class OrderController extends Controller
         return view('404');
     }
 
+    public function getAllOrder()
+    {
+        if (!Auth::check()) {
+            return redirect()->route('login');
+        }
+        $data = Order::orderBy('created_at', 'desc')->get();
+        return view('admin.order.showOrder',compact('data'));
+    }
+
+    public function Paid($id)
+    {
+        if (!Auth::check()) {
+            return redirect()->route('login');
+        }
+        $order = Order::find($id);
+        if($order != null){
+            $order->payment_status = env('PAYMENT_PAID');
+            $order->save();
+            return redirect()->back()->with('message','Order status updated successfully');
+        }
+    }
+
+    public function UnPaid($id)
+    {
+        if (!Auth::check()) {
+            return redirect()->route('login');
+        }
+        $order = Order::find($id);
+        if($order != null){
+            $order->payment_status = env('PAYMENT_UNPAID');
+            $order->save();
+            return redirect()->back()->with('message','Order status updated successfully');
+        }
+    }
+
+    public function Shipping($id)
+    {
+        if (!Auth::check()) {
+            return redirect()->route('login');
+        }
+        $order = Order::find($id);
+        if($order != null){
+                $order->delivery_status = env('ON_DELIVERY');
+                $order->save();
+                return redirect()->back()->with('message','Order status shipping successfully');
+        }
+    }
+
 }
