@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
+use App\Notifications\SendEmailNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Notification;
 use Stripe\Checkout\Session;
 use Stripe\Customer;
 use Stripe\Stripe;
@@ -164,6 +166,13 @@ class OrderController extends Controller
         }
         $order = Order::find($id);
         if($order != null){
+                $details = [
+                    'greeting' => 'Hi - '.$order->name,
+                    'firstline' =>'Your order is shipping',
+                    'body'=> 'Your Order id: '.$order->id,
+                    'lastline'=> 'Thank you for using our service!!!',
+                ];
+                Notification::send($order, new SendEmailNotification($details));
                 $order->delivery_status = env('ON_DELIVERY');
                 $order->save();
                 return redirect()->back()->with('message','Order status shipping successfully');
