@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [\App\Http\Controllers\HomeController::class,'index']);
-Route::get('/redirect',[\App\Http\Controllers\HomeController::class,'redirect']);
+Route::get('/redirect',[\App\Http\Controllers\HomeController::class,'redirect'])->middleware('auth','verified');
 Route::get('/detail/{id}',[\App\Http\Controllers\HomeController::class,'detail']);
 
 Route::middleware([
