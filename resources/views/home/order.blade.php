@@ -63,6 +63,7 @@
                     <th scope="col">Price</th>
                     <th scope="col">Payment Status</th>
                     <th scope="col">Delivery Status</th>
+                    <th scope="col">Action</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -74,6 +75,11 @@
                         <td>{{$order->price}}</td>
                         <td>{{$order->payment_status}}</td>
                         <td>{{$order->delivery_status}}</td>
+                        <td>
+                            <a href="{{url('print_pdf',$order->id)}}" class="btn-danger btn-lg">
+                                <i class="fa fa-print"></i>&nbsp; Print PDF
+                            </a>
+                        </td>
                     </tr>
                 @endforeach
                 </tbody>

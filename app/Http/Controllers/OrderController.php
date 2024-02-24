@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Stripe\Checkout\Session;
 use Stripe\Customer;
 use Stripe\Stripe;
+use PDF;
 
 class OrderController extends Controller
 {
@@ -167,6 +168,16 @@ class OrderController extends Controller
                 $order->save();
                 return redirect()->back()->with('message','Order status shipping successfully');
         }
+    }
+
+    public function print_pdf($id)
+    {
+        if (!Auth::check()) {
+            return redirect()->route('login');
+        }
+        $data = Order::find($id);
+        $pdf = PDF::loadView('home.pdf',compact('data'));
+        return $pdf->download('order_details.pdf');
     }
 
 }

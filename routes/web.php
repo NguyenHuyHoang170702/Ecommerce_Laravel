@@ -59,3 +59,4 @@ Route::post('/stripe',[\App\Http\Controllers\OrderController::class,'stripe'])->
 Route::get('/success', [\App\Http\Controllers\OrderController::class, 'stripeSuccess'])->name('stripeSuccess');
 Route::get('/404', [\App\Http\Controllers\OrderController::class, 'stripeCancel'])->name('stripeCancel');
 Route::get('/getOrderForCustomer', [\App\Http\Controllers\OrderController::class, 'getOrderForCustomer']);
+Route::get('/print_pdf/{id}', [\App\Http\Controllers\OrderController::class, 'print_pdf']);
