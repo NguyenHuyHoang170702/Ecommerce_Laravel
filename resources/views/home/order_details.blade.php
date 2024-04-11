@@ -47,7 +47,7 @@
             <div class="card-header bg-primary bg-gradient ml-0 py-3">
                 <div class="row">
                     <div class="col-12 text-center">
-                        <h2 class="text-white py-2">Order List</h2>
+                        <h2 class="text-white py-2">Order Details</h2>
                     </div>
                 </div>
             </div>
@@ -57,28 +57,25 @@
             <table class="table">
                 <thead class="table-primary">
                 <tr>
-                    <th scope="col">Payment Status</th>
-                    <th scope="col">Delivery Status</th>
-                    <th scope="col">PDF</th>
-                    <th scope="col">Details</th>
+                    <th scope="col">Product Title</th>
+                    <th scope="col">Images</th>
+                    <th scope="col">Quantity</th>
+                    <th scope="col">Price</th>
+
                 </tr>
                 </thead>
                 <tbody>
-                @foreach($data as $order)
+                @foreach($orderDetails as $detail)
                     <tr>
-                        <td>{{$order->payment_status}}</td>
-                        <td>{{$order->delivery_status}}</td>
                         <td>
-                            <a href="{{url('print_pdf',$order->id)}}" class="btn-danger btn-lg">
-                                <i class="fa fa-print"></i>&nbsp; Print PDF
-                            </a>
+                                <?php
+                                $productName = \App\Models\Product::where('id', $detail->product_id)->value('title');
+                                ?>
+                            {{ $productName }}
                         </td>
-                        <td>
-                            <a href="{{ route('order.details', $order->id) }}" class="btn btn-info">
-                                Details Order
-                            </a>
-                        </td>
-
+                        <td><img src="/product/{{$detail->image}}" alt="" style="width: 100px; height: 100px"></td>
+                        <td>{{ $detail->quantity }}</td>
+                        <td>{{ $detail->price }}</td>
                     </tr>
                 @endforeach
                 </tbody>

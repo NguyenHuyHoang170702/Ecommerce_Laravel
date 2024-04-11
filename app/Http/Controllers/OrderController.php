@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
+use App\Models\OrderDetail;
+use App\Models\Product;
 use App\Notifications\SendEmailNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -19,32 +21,44 @@ class OrderController extends Controller
         if (!Auth::check()) {
             return redirect()->route('login');
         }
+
         $cart = session()->get('cart');
         $user = Auth::user();
 
-        foreach ($cart as $c){
-            $newOrder = new Order();
+        // Tạo một bản ghi Order mới
+        $newOrder = new Order();
+        $newOrder->user_id = $user->id;
+        $newOrder->name = $user->name;
+        $newOrder->email = $user->email;
+        $newOrder->phonenumber = $user->phonenumber;
+        $newOrder->address = $user->address;
+        $newOrder->payment_status = env('PAYMENT_UNPAID');
+        $newOrder->delivery_status = env('PREPARING_GOODS');
+        $newOrder->save();
 
-            $newOrder->user_id = $user->id;
-            $newOrder->name = $user->name;
-            $newOrder->email = $user->email;
-            $newOrder->phonenumber = $user->phonenumber;
-            $newOrder->address = $user->address;
+        // Thêm các sản phẩm từ giỏ hàng vào bảng OrderDetail
+        foreach ($cart as $item) {
+            $product = Product::find($item['productId']);
+            if ($product) {
+                $product->quantity -= $item['quantity'];
+                $product->save();
+            }
 
-            $newOrder->product_id = $c['id'];
-            $newOrder->product_title = $c['title'];
-            $newOrder->quantity = $c['quantity'];
-            $newOrder->price = $c['price'];
-            $newOrder->image = $c['image'];
-
-            $newOrder->payment_status = env('PAYMENT_UNPAID');
-            $newOrder->delivery_status = env('PREPARING_GOODS');
-            $newOrder->save();
+            $orderDetail = new OrderDetail();
+            $orderDetail->order_id = $newOrder->id;
+            $orderDetail->product_id = $item['productId'];
+            $orderDetail->quantity = $item['quantity'];
+            $orderDetail->price = $item['price'];
+            $orderDetail->image = $item['image'];
+            $orderDetail->save();
         }
+
         \Illuminate\Support\Facades\Session::forget('cart');
 
         return view('home.success', compact('newOrder'));
     }
+
+
 
     public function stripe()
     {
@@ -71,24 +85,36 @@ class OrderController extends Controller
             'cancel_url' => route('stripeCancel'),
         ]);
 
-        foreach ($cart as $c){
-            $newOrder = new Order();
-            $newOrder->user_id = $user->id;
-            $newOrder->name = $user->name;
-            $newOrder->email = $user->email;
-            $newOrder->phonenumber = $user->phonenumber;
-            $newOrder->address = $user->address;
+        $cart = session()->get('cart');
+        $user = Auth::user();
 
-            $newOrder->product_id = $c['id'];
-            $newOrder->product_title = $c['title'];
-            $newOrder->quantity = $c['quantity'];
-            $newOrder->price = $c['price'];
-            $newOrder->image = $c['image'];
+        // Tạo một bản ghi Order mới
+        $newOrder = new Order();
+        $newOrder->user_id = $user->id;
+        $newOrder->name = $user->name;
+        $newOrder->email = $user->email;
+        $newOrder->phonenumber = $user->phonenumber;
+        $newOrder->address = $user->address;
+        $newOrder->payment_status = env('PAYMENT_UNPAID');
+        $newOrder->delivery_status = env('PREPARING_GOODS');
+        $newOrder->session_id = $session->id;
+        $newOrder->save();
 
-            $newOrder->payment_status = env('PAYMENT_UNPAID');
-            $newOrder->delivery_status = env('PREPARING_GOODS');
-            $newOrder->session_id = $session->id;
-            $newOrder->save();
+        // Thêm các sản phẩm từ giỏ hàng vào bảng OrderDetail
+        foreach ($cart as $item) {
+            $product = Product::find($item['productId']);
+            if ($product) {
+                $product->quantity -= $item['quantity'];
+                $product->save();
+            }
+
+            $orderDetail = new OrderDetail();
+            $orderDetail->order_id = $newOrder->id;
+            $orderDetail->product_id = $item['productId'];
+            $orderDetail->quantity = $item['quantity'];
+            $orderDetail->price = $item['price'];
+            $orderDetail->image = $item['image'];
+            $orderDetail->save();
         }
         return redirect()->away($session->url);
     }
@@ -188,5 +214,14 @@ class OrderController extends Controller
         $pdf = PDF::loadView('home.pdf',compact('data'));
         return $pdf->download('order_details.pdf');
     }
+
+    public function orderDetails($id)
+    {
+        $order = Order::findOrFail($id);
+        $orderDetails = OrderDetail::where('order_id', $id)->get();
+
+        return view('home.order_details', compact('order', 'orderDetails'));
+    }
+
 
 }

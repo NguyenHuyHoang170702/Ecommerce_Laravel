@@ -28,6 +28,7 @@ class ShoppingCartController extends Controller
             if($request->count != null){
                 $cart[$id] = [
                     'id' => $id,
+                    'productId' => $product->id,
                     'title' => $product->title,
                     'quantity' => $request->count,
                     'price' => $product->discount_price,
@@ -36,6 +37,7 @@ class ShoppingCartController extends Controller
             }else{
                 $cart[$id] = [
                     'id' => $id,
+                    'productId' => $product->id,
                     'title' => $product->title,
                     'quantity' => 1,
                     'price' => $product->discount_price,
