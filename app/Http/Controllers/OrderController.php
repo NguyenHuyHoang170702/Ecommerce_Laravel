@@ -13,6 +13,8 @@ use Stripe\Checkout\Session;
 use Stripe\Customer;
 use Stripe\Stripe;
 use PDF;
+use Dompdf\Dompdf;
+use Dompdf\Options;
 
 class OrderController extends Controller
 {
@@ -211,8 +213,18 @@ class OrderController extends Controller
             return redirect()->route('login');
         }
         $data = Order::find($id);
-        $pdf = PDF::loadView('home.pdf',compact('data'));
-        return $pdf->download('order_details.pdf');
+        // Lấy thông tin về order từ model Order
+        $order = Order::findOrFail($id);
+
+        // Lấy thông tin về order details từ model OrderDetail
+        $orderDetails = OrderDetail::where('order_id', $id)->get();
+
+        $pdf = new Dompdf();
+        $pdf->loadHtml(view('home.pdf',  compact('order', 'orderDetails')));
+        $pdf->setPaper('A4', 'portrait');
+        $pdf->render();
+
+        return $pdf->stream('order.pdf');
     }
 
     public function orderDetails($id)

@@ -22,7 +22,7 @@
                             <i class="fa fa-instagram"></i>
                         </a>
                     </div>
-                    <img src="{{URL::asset('images/instagram-01.jpg')}}" alt="">
+                    <img src="{{URL::asset('images/instagram-01.png')}}" alt="">
                 </div>
             </div>
             <div class="col-2">

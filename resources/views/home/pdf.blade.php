@@ -3,41 +3,69 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Invoice Poster</title>
+    <title>Order Details</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            text-align: center;
+        }
+        table {
+            margin-top: 20px;
+            border-collapse: collapse;
+            width: 100%;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        img {
+            max-width: 100px;
+            max-height: 100px;
+            display: block;
+            margin: 0 auto;
+        }
+    </style>
 </head>
 <body>
 <div class="container">
-    <div class="card">
-        <div class="card-header">
-            <h3>{{$data->product_title}}</h3>
-        </div>
-        <div class="card-body">
-            <div class="product-info">
-                <span>Name: {{$data->name}}</span>
-                <span>Email: {{$data->email}}</span>
-                <span>Price: {{$data->price}}$</span>
-                <span>Quantity: {{$data->quantity}}</span>
-            </div>
-            <div class="product-image">
-                <img src="product/{{$data->image}}" alt="Product Image" class="product-image">
-            </div>
-            <div>
-                <p>
-                    Dear Customer and Everyone who contributed,
+    <h1>Order Details</h1>
 
-                    We would like to express our deepest gratitude and sincere thanks to all the members who have devoted their time and effort to support us in this project. Your support not only helped us successfully complete the project but also created a memorable and meaningful experience.
+    <h2>Order Information:</h2>
+    <p>Order ID: {{ $order->id }}</p>
+    <p>Name: {{ $order->name }}</p>
+    <!-- Thêm các thông tin khác về order tại đây -->
 
-                    We understand that no project can succeed without the dedication and expertise of a committed and passionate team like yours. The effort, knowledge, and experience of everyone involved have been a great source of encouragement and made a difference in the project's development process.
-
-                    With heartfelt appreciation, we extend our thanks to each individual and group who contributed to the success of this project. We hope that we will continue to have the opportunity to collaborate on future projects and build new successes together.
-
-                    Once again, thank you sincerely, and we look forward to our continued relationship and growth in the future.
-
-                    Warm regards,
-                </p>
-            </div>
-        </div>
-    </div>
+    <h2>Order Details:</h2>
+    <table>
+        <thead>
+        <tr>
+            <th>Product ID</th>
+            <th>Quantity</th>
+            <th>Price</th>
+            <th>Image</th> <!-- Thêm cột hình ảnh -->
+        </tr>
+        </thead>
+        <tbody>
+        @foreach ($orderDetails as $detail)
+            <tr>
+                <td>{{ $detail->product_id }}</td>
+                <td>{{ $detail->quantity }}</td>
+                <td>{{ $detail->price }}</td>
+                <td><img src="{{ asset('product/' . $detail->image) }}" alt="" style="width: 100px; height: 100px"></td>
+            </tr>
+        @endforeach
+        </tbody>
+    </table>
 </div>
 </body>
 </html>

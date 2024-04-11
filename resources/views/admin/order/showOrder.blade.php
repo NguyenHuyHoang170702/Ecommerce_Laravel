@@ -49,10 +49,7 @@
                 <table class="table">
                     <thead class="table-primary">
                     <tr>
-                        <th scope="col">Email</th>
-                        <th scope="col">Product Title</th>
-                        <th scope="col">Quantity</th>
-                        <th scope="col">Price</th>
+                        <th scope="col">Id</th>
                         <th scope="col">Payment Status</th>
                         <th scope="col">Delivery Status</th>
                         <th scope="col">Actions</th>
@@ -61,10 +58,7 @@
                     <tbody>
                     @foreach($data as $order)
                         <tr>
-                            <td>{{$order->email}}</td>
-                            <td>{{$order->product_title}}</td>
-                            <td>{{$order->quantity}}</td>
-                            <td>{{$order->price}}</td>
+                            <td>{{$order->id}}</td>
                             <td>{{$order->payment_status}}</td>
                             <td>{{$order->delivery_status}}</td>
                             <td>
