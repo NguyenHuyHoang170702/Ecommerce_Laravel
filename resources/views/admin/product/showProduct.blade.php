@@ -65,11 +65,16 @@
                     </thead>
                     <tbody>
                     @foreach($data as $item)
-
                         <tr>
                             <th scope="row">{{$item->id}}</th>
                             <td>{{$item->title}}</td>
-                            <td>{{$item->category}}</td>
+                            <td>
+                                @foreach($categories as $category)
+                                    @if($category->id == $item->category)
+                                        {{$category->category_name}}
+                                    @endif
+                                @endforeach
+                            </td>
                             <td>{{$item->quantity}}</td>
                             <td>{{$item->price}}</td>
                             <td>{{$item->discount_price}}</td>
@@ -87,6 +92,8 @@
                             </td>
                         </tr>
                     @endforeach
+
+
                     {!!$data->withQueryString()->links('pagination::bootstrap-5')!!}
                     </tbody>
                 </table>

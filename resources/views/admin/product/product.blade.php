@@ -91,7 +91,7 @@
                                         <select name="category" class="form-control text-blue-50">
                                             <option disabled selected>---Choose Category---</option>
                                             @foreach($category as $c)
-                                                <option value="{{$c->category_name}}" class="text-amber-50">{{$c->category_name}}</option>
+                                                <option value="{{$c->id}}" class="text-amber-50">{{$c->category_name}}</option>
                                             @endforeach
                                         </select>
                                     </div>

@@ -29,8 +29,8 @@
                                 </div>
                                 <div class="down-content">
                                     <h4>{{$d->title}}</h4>
-                                    <span  style="text-decoration: line-through;">{{$d->price}}$</span>
-                                    <span>{{$d->discount_price}}$</span>
+                                    <span  style="text-decoration: line-through;">{{$d->price}}VND</span>
+                                    <span>{{$d->discount_price}}VND</span>
 
                                     <ul class="stars">
                                         <li><i class="fa fa-star"></i></li>
