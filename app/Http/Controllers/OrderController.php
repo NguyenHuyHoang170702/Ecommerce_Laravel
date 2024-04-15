@@ -23,102 +23,111 @@ class OrderController extends Controller
         if (!Auth::check()) {
             return redirect()->route('login');
         }
+        $userType = Auth::user()->email_verified_at;
+        if ($userType != null) {
 
-        $cart = session()->get('cart');
-        $user = Auth::user();
+            $cart = session()->get('cart');
+            $user = Auth::user();
 
-        // Tạo một bản ghi Order mới
-        $newOrder = new Order();
-        $newOrder->user_id = $user->id;
-        $newOrder->name = $user->name;
-        $newOrder->email = $user->email;
-        $newOrder->phonenumber = $user->phonenumber;
-        $newOrder->address = $user->address;
-        $newOrder->payment_status = env('PAYMENT_UNPAID');
-        $newOrder->delivery_status = env('PREPARING_GOODS');
-        $newOrder->save();
+            // Tạo một bản ghi Order mới
+            $newOrder = new Order();
+            $newOrder->user_id = $user->id;
+            $newOrder->name = $user->name;
+            $newOrder->email = $user->email;
+            $newOrder->phonenumber = $user->phonenumber;
+            $newOrder->address = $user->address;
+            $newOrder->payment_status = env('PAYMENT_UNPAID');
+            $newOrder->delivery_status = env('PREPARING_GOODS');
+            $newOrder->save();
 
-        // Thêm các sản phẩm từ giỏ hàng vào bảng OrderDetail
-        foreach ($cart as $item) {
-            $product = Product::find($item['productId']);
-            if ($product) {
-                $product->quantity -= $item['quantity'];
-                $product->save();
+            // Thêm các sản phẩm từ giỏ hàng vào bảng OrderDetail
+            foreach ($cart as $item) {
+                $product = Product::find($item['productId']);
+                if ($product) {
+                    $product->quantity -= $item['quantity'];
+                    $product->save();
+                }
+
+                $orderDetail = new OrderDetail();
+                $orderDetail->order_id = $newOrder->id;
+                $orderDetail->product_id = $item['productId'];
+                $orderDetail->quantity = $item['quantity'];
+                $orderDetail->price = $item['price'];
+                $orderDetail->image = $item['image'];
+                $orderDetail->save();
             }
+            \Illuminate\Support\Facades\Session::forget('cart');
 
-            $orderDetail = new OrderDetail();
-            $orderDetail->order_id = $newOrder->id;
-            $orderDetail->product_id = $item['productId'];
-            $orderDetail->quantity = $item['quantity'];
-            $orderDetail->price = $item['price'];
-            $orderDetail->image = $item['image'];
-            $orderDetail->save();
+            return view('home.success', compact('newOrder'));
+        }else{
+            return view('auth.verify-email');
         }
-
-        \Illuminate\Support\Facades\Session::forget('cart');
-
-        return view('home.success', compact('newOrder'));
     }
-
 
 
     public function stripe()
     {
-        $user = Auth::user();
-        $cart = session()->get('cart');
-        $line_items = [];
-        foreach ($cart as $c){
-            $line_items[] = [
-                'price_data' => [
-                    'currency' => 'vnd',
-                    'product_data' => [
-                        'name' => $c['title']
+        $userType = Auth::user()->email_verified_at;
+        if ($userType != null) {
+            $user = Auth::user();
+            $cart = session()->get('cart');
+            $line_items = [];
+            foreach ($cart as $c) {
+                $line_items[] = [
+                    'price_data' => [
+                        'currency' => 'vnd',
+                        'product_data' => [
+                            'name' => $c['title']
+                        ],
+                        'unit_amount' => $c['price']
                     ],
-                    'unit_amount' => $c['price']
-                ],
-                'quantity' => $c['quantity']
-            ];
-        }
-        Stripe::setApiKey(env('STRIPE_SECRET_KEY'));
-        $session = Session::create([
-            'line_items' => $line_items,
-            'mode' => 'payment',
-            'success_url' => route('stripeSuccess')."?session_id={CHECKOUT_SESSION_ID}",
-            'cancel_url' => route('stripeCancel'),
-        ]);
+                    'quantity' => $c['quantity']
+                ];
+            }
+            Stripe::setApiKey(env('STRIPE_SECRET_KEY'));
+            $session = Session::create([
+                'line_items' => $line_items,
+                'mode' => 'payment',
+                'success_url' => route('stripeSuccess') . "?session_id={CHECKOUT_SESSION_ID}",
+                'cancel_url' => route('stripeCancel'),
+            ]);
 
-        $cart = session()->get('cart');
-        $user = Auth::user();
+            $cart = session()->get('cart');
+            $user = Auth::user();
 
-        // Tạo một bản ghi Order mới
-        $newOrder = new Order();
-        $newOrder->user_id = $user->id;
-        $newOrder->name = $user->name;
-        $newOrder->email = $user->email;
-        $newOrder->phonenumber = $user->phonenumber;
-        $newOrder->address = $user->address;
-        $newOrder->payment_status = env('PAYMENT_UNPAID');
-        $newOrder->delivery_status = env('PREPARING_GOODS');
-        $newOrder->session_id = $session->id;
-        $newOrder->save();
+            // Tạo một bản ghi Order mới
+            $newOrder = new Order();
+            $newOrder->user_id = $user->id;
+            $newOrder->name = $user->name;
+            $newOrder->email = $user->email;
+            $newOrder->phonenumber = $user->phonenumber;
+            $newOrder->address = $user->address;
+            $newOrder->payment_status = env('PAYMENT_UNPAID');
+            $newOrder->delivery_status = env('PREPARING_GOODS');
+            $newOrder->session_id = $session->id;
+            $newOrder->save();
 
-        // Thêm các sản phẩm từ giỏ hàng vào bảng OrderDetail
-        foreach ($cart as $item) {
-            $product = Product::find($item['productId']);
-            if ($product) {
-                $product->quantity -= $item['quantity'];
-                $product->save();
+            // Thêm các sản phẩm từ giỏ hàng vào bảng OrderDetail
+            foreach ($cart as $item) {
+                $product = Product::find($item['productId']);
+                if ($product) {
+                    $product->quantity -= $item['quantity'];
+                    $product->save();
+                }
+
+                $orderDetail = new OrderDetail();
+                $orderDetail->order_id = $newOrder->id;
+                $orderDetail->product_id = $item['productId'];
+                $orderDetail->quantity = $item['quantity'];
+                $orderDetail->price = $item['price'];
+                $orderDetail->image = $item['image'];
+                $orderDetail->save();
             }
 
-            $orderDetail = new OrderDetail();
-            $orderDetail->order_id = $newOrder->id;
-            $orderDetail->product_id = $item['productId'];
-            $orderDetail->quantity = $item['quantity'];
-            $orderDetail->price = $item['price'];
-            $orderDetail->image = $item['image'];
-            $orderDetail->save();
+            return redirect()->away($session->url);
+        }else{
+            return view('auth.verify-email');
         }
-        return redirect()->away($session->url);
     }
 
     public function stripeSuccess(Request $request)
@@ -127,7 +136,7 @@ class OrderController extends Controller
         $sesionId = $request->get('session_id');
         $exitOrder = Order::all();
         foreach ($exitOrder as $order) {
-            if($order->session_id == $sesionId){
+            if ($order->session_id == $sesionId) {
                 $order->payment_status = env('PAYMENT_PAID');
                 $order->save();
             }
@@ -149,7 +158,7 @@ class OrderController extends Controller
         $data = Order::orderBy('created_at', 'desc')
             ->where('user_id', Auth::user()->id)
             ->get();
-        return view('home.order',compact('data'));
+        return view('home.order', compact('data'));
     }
 
     public function getAllOrder()
@@ -158,7 +167,7 @@ class OrderController extends Controller
             return redirect()->route('login');
         }
         $data = Order::orderBy('created_at', 'desc')->get();
-        return view('admin.order.showOrder',compact('data'));
+        return view('admin.order.showOrder', compact('data'));
     }
 
     public function Paid($id)
@@ -167,10 +176,10 @@ class OrderController extends Controller
             return redirect()->route('login');
         }
         $order = Order::find($id);
-        if($order != null){
+        if ($order != null) {
             $order->payment_status = env('PAYMENT_PAID');
             $order->save();
-            return redirect()->back()->with('message','Order status updated successfully');
+            return redirect()->back()->with('message', 'Order status updated successfully');
         }
     }
 
@@ -180,10 +189,10 @@ class OrderController extends Controller
             return redirect()->route('login');
         }
         $order = Order::find($id);
-        if($order != null){
+        if ($order != null) {
             $order->payment_status = env('PAYMENT_UNPAID');
             $order->save();
-            return redirect()->back()->with('message','Order status updated successfully');
+            return redirect()->back()->with('message', 'Order status updated successfully');
         }
     }
 
@@ -193,17 +202,17 @@ class OrderController extends Controller
             return redirect()->route('login');
         }
         $order = Order::find($id);
-        if($order != null){
-                $details = [
-                    'greeting' => 'Hi - '.$order->name,
-                    'firstline' =>'Your order is shipping',
-                    'body'=> 'Your Order id: '.$order->id,
-                    'lastline'=> 'Thank you for using our service!!!',
-                ];
-                Notification::send($order, new SendEmailNotification($details));
-                $order->delivery_status = env('ON_DELIVERY');
-                $order->save();
-                return redirect()->back()->with('message','Order status shipping successfully');
+        if ($order != null) {
+            $details = [
+                'greeting' => 'Hi - ' . $order->name,
+                'firstline' => 'Your order is shipping',
+                'body' => 'Your Order id: ' . $order->id,
+                'lastline' => 'Thank you for using our service!!!',
+            ];
+            Notification::send($order, new SendEmailNotification($details));
+            $order->delivery_status = env('ON_DELIVERY');
+            $order->save();
+            return redirect()->back()->with('message', 'Order status shipping successfully');
         }
     }
 
@@ -220,7 +229,7 @@ class OrderController extends Controller
         $orderDetails = OrderDetail::where('order_id', $id)->get();
 
         $pdf = new Dompdf();
-        $pdf->loadHtml(view('home.pdf',  compact('order', 'orderDetails')));
+        $pdf->loadHtml(view('home.pdf', compact('order', 'orderDetails')));
         $pdf->setPaper('A4', 'portrait');
         $pdf->render();
 
