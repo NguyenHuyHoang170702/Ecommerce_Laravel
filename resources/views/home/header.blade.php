@@ -19,10 +19,9 @@
                         <li class="submenu">
                             <a href="javascript:;">Pages</a>
                             <ul>
-                                <li><a href="about.blade.php">About Us</a></li>
-                                <li><a href="products.blade.php">Products</a></li>
-                                <li><a href="single-product.blade.php">Single Product</a></li>
-                                <li><a href="contact.blade.php">Contact Us</a></li>
+                                <li><a href="{{url('/show_Man_product')}}">Products for men</a></li>
+                                <li><a href="{{url('/show_WoMan_product')}}">Products for woman</a></li>
+                                <li><a href="{{url('/show_Kid_product')}}">Products for kid</a></li>
                             </ul>
                         </li>
                         <li class="">

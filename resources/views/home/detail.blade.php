@@ -66,9 +66,6 @@
                             <img width="200" height="280" src="/product/{{$data->image}}" class="card-img-top rounded">
                         </div>
                         <div class="col-12 col-lg-6 offset-lg-1">
-                            <div class="col-12 col-md-6 pb-4">
-                                <span class="">{{$data->category}}</span>
-                            </div>
                             <div class="row text-center ps-2">
                                 <div class="p-1 col-3 col-lg-2 bg-white border-bottom">
                                     <div style="text-decoration-line: line-through" class="text-dark text-opacity-50 fw-semibold">Price</div>

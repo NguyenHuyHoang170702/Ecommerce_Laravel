@@ -16,6 +16,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [\App\Http\Controllers\HomeController::class,'index']);
 Route::get('/redirect',[\App\Http\Controllers\HomeController::class,'redirect'])->middleware('auth','verified');
 Route::get('/detail/{id}',[\App\Http\Controllers\HomeController::class,'detail']);
+Route::get('/show_Man_product',[\App\Http\Controllers\HomeController::class,'show_Man_product']);
+Route::get('/show_WoMan_product',[\App\Http\Controllers\HomeController::class,'show_WoMan_product']);
+Route::get('/show_Kid_product',[\App\Http\Controllers\HomeController::class,'show_Kid_product']);
 
 Route::middleware([
     'auth:sanctum',
@@ -61,5 +64,7 @@ Route::get('/404', [\App\Http\Controllers\OrderController::class, 'stripeCancel'
 Route::get('/getOrderForCustomer', [\App\Http\Controllers\OrderController::class, 'getOrderForCustomer']);
 Route::get('/print_pdf/{id}', [\App\Http\Controllers\OrderController::class, 'print_pdf']);
 Route::get('/order/{id}/details', [\App\Http\Controllers\OrderController::class, 'orderDetails'])->name('order.details');
+
+
 
 
